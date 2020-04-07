@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-reactive',
@@ -13,11 +13,15 @@ export class ReactiveComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.crearFormulario();
+    this.cargarData();
   }
 
   ngOnInit() {
   }
 
+  get pasatiempos(): FormArray {
+    return this.forma.get('pasatiempos') as FormArray;
+  }
   get validationName(): boolean {
     return this.forma.get('nombre').invalid && this.forma.get('nombre').touched;
   }
@@ -36,14 +40,35 @@ export class ReactiveComponent implements OnInit {
 
   crearFormulario() {
     this.forma = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(5)]],
+      nombre: ['', [Validators.required, Validators.minLength(3)]],
       apellido: ['', Validators.required],
       correo: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       direccion: this.fb.group({
         distrito: ['', Validators.required],
         ciudad: ['', Validators.required]
-      })
+      }),
+      pasatiempos: this.fb.array([])
     });
+  }
+
+  cargarData() {
+    this.forma.patchValue({
+      nombre: ['Sergio'],
+      apellido: ['Nino'],
+      correo: ['fullsanmons@gmail.com'],
+      direccion: {
+        distrito: 'Antioquia',
+        ciudad: 'Envigado'
+      }
+    });
+  }
+
+  agregarPasatiempo() {
+    this.pasatiempos.push(this.fb.control('', Validators.required));
+  }
+
+  borrarPasatiempo(i: number) {
+    this.pasatiempos.removeAt(i);
   }
 
   guardar() {
@@ -57,6 +82,8 @@ export class ReactiveComponent implements OnInit {
         }
       });
     }
+
+    this.forma.reset();
 
   }
 

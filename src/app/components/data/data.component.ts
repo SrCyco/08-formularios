@@ -11,7 +11,7 @@ export class DataComponent implements OnInit {
 
   forma: FormGroup;
 
-  usuario: Object = {
+  usuario: object = {
     nombrecompleto: {
       nombre: 'Sergio',
       apellido: 'Niño'

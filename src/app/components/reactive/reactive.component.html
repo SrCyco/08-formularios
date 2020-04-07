@@ -4,35 +4,74 @@
   <div>
     <div class="form-group row">
       <label class="col-2 col-form-label">Nombre</label>
-      <div class="col-8">
+      <div class="col">
         <input class="form-control"
                type="text"
                placeholder="Nombre"
-               formControlName="nombre">
+               formControlName="nombre"
+               [class.is-invalid]="validationName">
+        <small *ngIf="validationName" class="text-danger">
+          Ingrese 5 letras
+        </small>
       </div>
     </div>
     <div class="form-group row">
       <label class="col-2 col-form-label">Apellido</label>
-      <div class="col-8">
+      <div class="col">
         <input class="form-control"
                type="text"
                placeholder="Apellido"
-               formControlName="apellido">
+               formControlName="apellido"
+               [class.is-invalid]="validationLastname"
+        >
+        <small *ngIf="validationLastname" class="text-danger">
+          Campo obligatorio
+        </small>
       </div>
     </div>
   </div>
   <div class="form-group row">
     <label class="col-2 col-form-label">Correo</label>
-    <div class="col-md-8">
+    <div class="col">
       <input class="form-control"
              type="email"
              placeholder="Correo electrónico"
+             [class.is-invalid]="validationMail"
              formControlName="correo">
+      <small *ngIf="validationMail" class="text-danger">
+        Ingrese el correo
+      </small>
+    </div>
+  </div>
+  <div class="form-group row" formGroupName="direccion">
+    <label class="col-2 col-form-label">Direccion</label>
+    <div class="form-row col">
+      <div class="col">
+
+        <input class="form-control"
+               type="text"
+               placeholder="distrito"
+               formControlName="distrito"
+               [class.is-invalid]="validationDistrito"
+               >
+      </div>
+      <div class="col">
+
+        <input class="form-control"
+               type="text"
+               placeholder="Ciudad"
+               formControlName="ciudad"
+               [class.is-invalid]="validationCity"
+               >
+      </div>
+      <small *ngIf="validationMail" class="text-danger">
+        Ingrese la dirección
+      </small>
     </div>
   </div>
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
-    <div class="input-group col-md-8">
+    <div class="input-group col">
       <button type="submit" class="btn btn-outline-primary">
         Guardar
       </button>

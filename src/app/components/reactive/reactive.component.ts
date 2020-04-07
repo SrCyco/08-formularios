@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ValidadoresService} from '../../services/validadores.service';
 
 @Component({
   selector: 'app-reactive',
@@ -10,7 +11,8 @@ export class ReactiveComponent implements OnInit {
   public forma: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private validadores: ValidadoresService
   ) {
     this.crearFormulario();
     this.cargarData();
@@ -40,8 +42,8 @@ export class ReactiveComponent implements OnInit {
 
   crearFormulario() {
     this.forma = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(3)]],
-      apellido: ['', Validators.required],
+      nombre: ['', [Validators.required, Validators.minLength(2)]],
+      apellido: ['', [Validators.required, this.validadores.noHerrera]],
       correo: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       direccion: this.fb.group({
         distrito: ['', Validators.required],
@@ -53,9 +55,9 @@ export class ReactiveComponent implements OnInit {
 
   cargarData() {
     this.forma.patchValue({
-      nombre: ['Sergio'],
-      apellido: ['Nino'],
-      correo: ['fullsanmons@gmail.com'],
+      nombre: 'Sergio',
+      apellido: 'Nino',
+      correo: 'fullsanmons@gmail.com',
       direccion: {
         distrito: 'Antioquia',
         ciudad: 'Envigado'

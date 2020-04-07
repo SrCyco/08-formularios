@@ -47,12 +47,16 @@ export class ReactiveComponent implements OnInit {
     const pass2 = this.forma.get('pass2').value;
     return pass1 !== pass2;
   }
+  get usuarioNoValido() {
+    return this.forma.get('usuario').invalid && this.forma.get('usuario').touched;
+  }
 
   crearFormulario() {
     this.forma = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       apellido: ['', [Validators.required, this.validadores.noHerrera]],
       correo: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      usuario: ['', , this.validadores.existeUsuario],
       pass1: ['', Validators.required],
       pass2: ['', Validators.required],
       direccion: this.fb.group({
@@ -70,6 +74,8 @@ export class ReactiveComponent implements OnInit {
       nombre: 'Sergio',
       apellido: 'Nino',
       correo: 'fullsanmons@gmail.com',
+      pass1: '123',
+      pass2: '123',
       direccion: {
         distrito: 'Antioquia',
         ciudad: 'Envigado'
